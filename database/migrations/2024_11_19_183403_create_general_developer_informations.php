@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('general_developer_informations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
+            $table->longText('description');
             $table->integer('years_of_experience')->default(0);
             $table->integer('projects')->default(0);
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable(false);
+            $table->string('email')->nullable(false);
             $table->string('cv')->nullable();
             $table->timestamps();
         });

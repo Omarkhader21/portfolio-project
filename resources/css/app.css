@@ -59,7 +59,14 @@ button i {
     @apply p-0;
 }
 
-input,
+input[type="text"],
+input[type="email"],
 textarea {
-    @apply border dark:border-gray-500 rounded placeholder:text-sm font-Poppins outline-none py-2 px-3 mb-4 resize-none bg-transparent;
+    @apply border dark:border-gray-500 rounded placeholder:text-sm font-Poppins outline-none py-2 px-3 mt-1 resize-none bg-transparent;
+}
+/* Validation error message styling */
+.error-message {
+    margin-bottom: 0.5rem; /* Adjust this value to increase spacing */
+    color: red; /* Keep the color for errors */
+    font-size: 0.875rem; /* Slightly smaller font size for error messages */
 }

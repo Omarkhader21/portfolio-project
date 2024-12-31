@@ -18,6 +18,16 @@ class GeneralDeveloperInformation extends Model
         'years_of_experience',
         'projects',
         'cv',
+        'phone',
+        'address',
+        'email',
+    ];
+
+    // Casting fields to specific types
+    protected $casts = [
+        'phone' => 'string',  // Ensure phone is treated as a string
+        'address' => 'string',  // Ensure address is treated as a string
+        'email' => 'string',  // Ensure email is treated as a string
     ];
 
     // Accessor for years_of_experience
@@ -42,6 +52,18 @@ class GeneralDeveloperInformation extends Model
     public function scopeExperienced($query, $years)
     {
         return $query->where('years_of_experience', '>', $years);
+    }
+
+    // Example: Format phone number
+    public function getPhoneAttribute($value)
+    {
+        return '(' . substr($value, 0, 3) . ') ' . substr($value, 3, 3) . '-' . substr($value, 6);
+    }
+
+    // Example: Lowercase email for consistency
+    public function getEmailAttribute($value)
+    {
+        return strtolower($value);
     }
 
     // Validation rules for the model

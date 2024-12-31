@@ -257,23 +257,7 @@
                         Send Us A <br>
                         <span>Message</span>
                     </h3>
-                    <form action="" class="*:flex *:flex-col *:gap-1 mt-5 md:w-2/3 w-full">
-                        <div>
-                            <label for="name">Name</label>
-                            <input type="text" name="name" id="name" placeholder="Enter your name" class="input">
-                        </div>
-                        <div>
-                            <label for="email">Email Address</label>
-                            <input type="email" name="email" id="email" placeholder="Enter your email address"
-                                class="input">
-                        </div>
-                        <div>
-                            <label for="message">Message</label>
-                            <textarea name="message" id="message" placeholder="Enter your message"
-                                class="input"></textarea>
-                        </div>
-                        <button class="btn btn-filled ml-auto">Send to Us</button>
-                    </form>
+                    @livewire('contact-us-form')
                 </div>
                 <div
                     class="dark:bg-gray-700 bg-white py-12 px-7 md:absolute lg:-right-9 right-28 rounded-xl shadow-xl md:w-2/5 h-5/6 top-28 w-full mx-auto">
@@ -289,17 +273,17 @@
                             <li>
                                 <i class="fa-solid fa-location-dot"></i>
                                 <div>
-                                    <h2>Amman Jordan</h2>
-                                    <address>Amman Hey Nazzal</address>
+                                    <h2>Stuttgart</h2>
+                                    <address>Uhlbergstr. 85</address>
                                 </div>
                             </li>
                             <li>
-                                <i class="sa-solid fa-envelope"></i>
+                                <i class="sa-solid fa-at"></i>
                                 <p>omar.work21@outlook.com</p>
                             </li>
                             <li>
                                 <i class="fa-solid fa-phone"></i>
-                                <p>+962 775 966 466</p>
+                                <p>+49 17684672691</p>
                             </li>
                         </ul>
                         <div

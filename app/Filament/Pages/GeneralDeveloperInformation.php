@@ -2,18 +2,20 @@
 
 namespace App\Filament\Pages;
 
-use App\Models\GeneralDeveloperInformation as ModelsGeneralDeveloperInformation;
 use Filament\Forms\Form;
 use Filament\Pages\Page;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Select;
 use Filament\Support\Exceptions\Halt;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Ysfkaya\FilamentPhoneInput\Forms\PhoneInput;
+use App\Models\GeneralDeveloperInformation as ModelsGeneralDeveloperInformation;
 
 class GeneralDeveloperInformation extends Page
 {
@@ -48,7 +50,27 @@ class GeneralDeveloperInformation extends Page
                                     ->maxLength(50)
                                     ->placeholder('Enter your full name')
                                     ->helperText('This will appear as the developer’s name.')
-                                    ->prefixIcon('heroicon-o-user'),
+                                    ->prefixIcon('heroicon-o-user-circle'),
+
+                                TextInput::make('address')
+                                    ->label('Address')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->placeholder('Enter the developer’s address')
+                                    ->helperText('This address will appear on the developer’s profile.')
+                                    ->prefixIcon('heroicon-o-home'),
+
+                                TextInput::make('email')
+                                    ->label('Email Address')
+                                    ->required()
+                                    ->email()
+                                    ->placeholder('Enter developer’s email')
+                                    ->helperText('The email will be used for contacting the developer.')
+                                    ->prefixIcon('heroicon-o-envelope'),
+
+                                // Row for Country Code and Phone Number
+                                PhoneInput::make('phone'),
+
                                 TextInput::make('years_of_experience')
                                     ->label('Years of Experience')
                                     ->required()
@@ -57,6 +79,7 @@ class GeneralDeveloperInformation extends Page
                                     ->maxValue(50)
                                     ->placeholder('Enter years of experience')
                                     ->helperText('Please enter a number between 0 and 50.'),
+
                                 TextInput::make('projects')
                                     ->label('Completed Projects')
                                     ->required()
@@ -64,6 +87,7 @@ class GeneralDeveloperInformation extends Page
                                     ->minValue(0)
                                     ->placeholder('Enter total completed projects')
                                     ->helperText('Total number of projects completed.'),
+
                                 RichEditor::make('description')
                                     ->label('Developer Description')
                                     ->required()
@@ -81,7 +105,6 @@ class GeneralDeveloperInformation extends Page
                                     ->enableDownload()
                                     ->previewable()
                                     ->helperText('Upload your CV in PDF format.')
-
                             ])
                             ->columnSpan(3),
                     ]),
@@ -89,8 +112,6 @@ class GeneralDeveloperInformation extends Page
             ->columns(12)
             ->statePath('data');
     }
-
-
 
     protected function getFormActions(): array
     {
@@ -113,6 +134,11 @@ class GeneralDeveloperInformation extends Page
                 $cvPath = $data['cv']->storeAs('cv_uploads', 'cv_' . time() . '.pdf', 'public');
                 // Update the cv field with the file path
                 $data['cv'] = $cvPath;
+            }
+
+            // Combine country code and phone number
+            if (isset($data['country_code']) && isset($data['phone'])) {
+                $data['phone'] = $data['country_code'] . ' ' . $data['phone'];
             }
 
             // Check if a record already exists
