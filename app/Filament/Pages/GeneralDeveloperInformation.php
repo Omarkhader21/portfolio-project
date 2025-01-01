@@ -88,6 +88,16 @@ class GeneralDeveloperInformation extends Page
                                     ->placeholder('Enter total completed projects')
                                     ->helperText('Total number of projects completed.'),
 
+                                RichEditor::make('what_i_know')->label('What you know')
+                                    ->required()
+                                    ->placeholder('Write a brief summary about what are you know...')
+                                    ->helperText('This Know paragrah is visible on the home page.'),
+
+                                RichEditor::make('projects_description')->label('What is your projects')
+                                    ->required()
+                                    ->placeholder('Write a brief summary about what are you build...')
+                                    ->helperText('This projects paragrah is visible on the home page.'),
+
                                 RichEditor::make('description')
                                     ->label('Developer Description')
                                     ->required()

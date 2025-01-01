@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use DOMDocument;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class GeneralDeveloperInformation extends Model
 {
@@ -20,7 +21,9 @@ class GeneralDeveloperInformation extends Model
         'cv',
         'phone',
         'address',
+        'what_i_know',
         'email',
+        'projects_description'
     ];
 
     // Casting fields to specific types
@@ -28,12 +31,33 @@ class GeneralDeveloperInformation extends Model
         'phone' => 'string',  // Ensure phone is treated as a string
         'address' => 'string',  // Ensure address is treated as a string
         'email' => 'string',  // Ensure email is treated as a string
+        'what_i_know' => 'string',  // Ensure what_i_know is treated as a string
+        'projects_description' => 'string',  // Ensure projects_description is treated as a string
     ];
 
     // Accessor for years_of_experience
     public function getExperienceInYearsAttribute()
     {
         return $this->years_of_experience . ' years';
+    }
+
+    public function getSplitAddress()
+    {
+        return explode('/', $this->address);
+    }
+
+    /**
+     * Get the first paragraph from the given HTML content.
+     *
+     * @param string $htmlContent
+     * @return string
+     */
+    public function getFirstParagraph($htmlContent)
+    {
+        $dom = new DOMDocument();
+        @$dom->loadHTML($htmlContent);
+        $paragraphs = $dom->getElementsByTagName('p');
+        return $paragraphs->length > 0 ? $paragraphs->item(0)->textContent : '';
     }
 
     // Mutator to store the CV
@@ -72,8 +96,13 @@ class GeneralDeveloperInformation extends Model
         return [
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'what_i_know' => 'required|string',
             'years_of_experience' => 'integer|min:0',
             'projects' => 'integer|min:0',
+            'phone' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'projects_description' => 'nullable|string',
             'cv' => 'nullable|file|mimes:pdf|max:2048', // Allow PDF file types and limit size to 2MB
         ];
     }
